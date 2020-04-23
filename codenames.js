@@ -35,7 +35,7 @@ const getCards = (words) => {
 const getRandomColors = () => {
 	let colors = [];
 
-	for (i = 0; i < 20; i++) {
+	for (i = 0; i < 19; i++) {
 		index = Math.floor(Math.random() * 20);
 		if (i < 7) {
 
