@@ -16,9 +16,10 @@ const newGame = () => {
 // change color of tile text based on the color of the card during initalization
 const flipCard = (element) => {
 	card = getCard(element.textContent);
-	if (document.getElementById(element.id).style.color != card.color ? 
-		document.getElementById(element.id).style.color = card.color : 
-		document.getElementById(element.id).style.color = 'black');
+	docElem = document.getElementById(element.id);
+	if (docElem.style.color != card.color ? 
+		docElem.style.color = card.color : 
+		docElem.style.color = 'black');
 }
 
 // find the specific card in the cards array by the 'word' value
