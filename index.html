@@ -2,6 +2,8 @@
 <head>
 	<title>Codenames</title>
     <link rel="stylesheet" type="text/css" href="./style.css">
+   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+   		<script src="./codenamesjquery.js"></script>
 		<script src="./seedrandom.js"></script>
 		<script src="./codenames.js"></script>
 </head>
@@ -12,7 +14,8 @@
 	<label for="seed">Game Name:</label><br>
 	<input type="text" id="seed" name="seed" value="Enter a random phrase"><br><br>
 
-	<button onClick="newGame(seed)">New Game</button><br><br>
+	<!--<button onClick="newGame(seed)">New Game</button><br><br>-->
+	<button id="newgamebutton">New Game</button><br><br>
 
 	<label>View Board Answers</label><br>
 	<button onClick="seeColors()">See Colors</button><br><br>
@@ -20,26 +23,26 @@
 	<h2>The Board</h2>
 
 	<div class="grid-container" id="board">
-		<div class='grid-item' id='tile0' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile1' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile2' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile3' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile4' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile5' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile6' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile7' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile8' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile9' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile10' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile11' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile12' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile13' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile14' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile15' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile16' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile17' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile18' onclick='flipCard(this)'></div>
-		<div class='grid-item' id='tile19' onclick='flipCard(this)'></div>
+		<div class='grid-item' id='tile0'></div>
+		<div class='grid-item' id='tile1'></div>
+		<div class='grid-item' id='tile2'></div>
+		<div class='grid-item' id='tile3'></div>
+		<div class='grid-item' id='tile4'></div>
+		<div class='grid-item' id='tile5'></div>
+		<div class='grid-item' id='tile6'></div>
+		<div class='grid-item' id='tile7'></div>
+		<div class='grid-item' id='tile8'></div>
+		<div class='grid-item' id='tile9'></div>
+		<div class='grid-item' id='tile10'></div>
+		<div class='grid-item' id='tile11'></div>
+		<div class='grid-item' id='tile12'></div>
+		<div class='grid-item' id='tile13'></div>
+		<div class='grid-item' id='tile14'></div>
+		<div class='grid-item' id='tile15'></div>
+		<div class='grid-item' id='tile16'></div>
+		<div class='grid-item' id='tile17'></div>
+		<div class='grid-item' id='tile18'></div>
+		<div class='grid-item' id='tile19'></div>
 	</div>
 </body>
 </html>

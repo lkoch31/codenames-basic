@@ -1,8 +1,5 @@
-
 // create a new game and put a word in every tile
 const newGame = (seed) => {
-	let innerHtml = ""
-
 	Math.seedrandom(seed.value);
 
 	let words = getWords();
@@ -23,6 +20,7 @@ const flipCard = (element) => {
 	if (docElem.style.color != card.color ?
 		docElem.style.color = card.color :
 		docElem.style.color = 'black');
+    $( "#board" ).load(window.location.href + " #board" );
 }
 
 // find the specific card in the cards array by the 'word' value
