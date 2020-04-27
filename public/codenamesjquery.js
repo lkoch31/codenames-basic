@@ -1,26 +1,33 @@
 $(document).ready(function () {
 
-	$.getJSON("https://koch-codenames.s3.amazonaws.com/cards.json", function(json) {
-		console.log(json)
-	});
+	var cards = JSON.parse(localStorage.getItem('cards.json'))
+
+	if (cards) {
+		for (i = 0; i < cards.length; i++) {
+			document.getElementById("tile" + i).textContent = cards[i].word;
+		}
+	}
 
 	$("#newgamebutton").click(function() {
 		Math.seedrandom($("#seed"));
 		let words = getWords();
 
-		let cards = getCards(words);
-		console.log(JSON.stringify(cards));
+		cards = getCards(words);
 
 		for (i = 0; i < cards.length; i++) {
 			document.getElementById("tile" + i).textContent = cards[i].word;
 		}
+
+		// save these newly generated cards back into local storage 
+		localStorage.setItem('cards.json', JSON.stringify(cards));
 	})
 
 	$(".grid-item").click(function() {
 		element = $(this);
 		console.log(element.text());
 		card = getCard(element.text());
-		if ($(this).css('color') != card.color ?
+		// this is a stupid addition because npm is converting my string colors to rgb
+		if (($(this).css('color') == 'black' || $(this).css('color') == 'rgb(0, 0, 0)') ?
 			$(this).css('color', card.color) :
 			$(this).css('color', 'black'));
 	})
@@ -108,9 +115,9 @@ $(document).ready(function () {
 
 
 	//this function shows the user the answers
-	const seeColors = () => {
+	$("#seecolors").click(function() {
 		for (i = 0; i < 20; i++) {
 			flipCard(document.getElementById("tile" + i));
 		}
-	}
+	});
 });
