@@ -13,24 +13,31 @@ $(document).ready(function () {
 		let words = getWords();
 
 		cards = getCards(words);
+		console.log(JSON.stringify(cards));
 
 		for (i = 0; i < cards.length; i++) {
-			document.getElementById("tile" + i).textContent = cards[i].word;
+			element = document.getElementById("tile" + i);
+			element.textContent = cards[i].word;
+			element.style.color = cards[i].activeColor;
 		}
 
 		// save these newly generated cards back into local storage 
-		localStorage.setItem('cards.json', JSON.stringify(cards));
+		saveCards();
 	})
 
 	$(".grid-item").click(function() {
 		element = $(this);
-		console.log(element.text());
-		card = getCard(element.text());
-		// this is a stupid addition because npm is converting my string colors to rgb
-		if (($(this).css('color') == 'black' || $(this).css('color') == 'rgb(0, 0, 0)') ?
-			$(this).css('color', card.color) :
-			$(this).css('color', 'black'));
+		flipCard(element)
 	})
+
+	const flipCard = (element) => {
+		card = getCard(element.text());
+		// switch card colors (if black -> show color, if showing color -> return to black)
+		activeColor = element.css('color');
+		element.css('color', card.inactiveColor);
+		card.activeColor = card.inactiveColor;
+		card.inactiveColor = activeColor; 
+	}
 
 	// find the specific card in the cards array by the 'word' value
 	const getCard = (word) => {
@@ -62,7 +69,7 @@ $(document).ready(function () {
 		cards = [];
 		colors = getRandomColors();
 		for (i = 0; i < words.length; i++) {
-			cards.push({"word":words[i], "color":colors[i]})
+			cards.push({"word":words[i], "inactiveColor":colors[i], "activeColor":'black'})
 		}
 
 		return cards;
@@ -116,8 +123,13 @@ $(document).ready(function () {
 
 	//this function shows the user the answers
 	$("#seecolors").click(function() {
+		console.log('inside see colors');
 		for (i = 0; i < 20; i++) {
-			flipCard(document.getElementById("tile" + i));
+			flipCard($("#tile" + i));
 		}
 	});
+
+	const saveCards = () => {
+		localStorage.setItem('cards.json', JSON.stringify(cards));
+	}
 });
