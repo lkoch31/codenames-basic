@@ -123,9 +123,11 @@ $(document).ready(function () {
 
 	//this function shows the user the answers
 	$("#seecolors").click(function() {
-		console.log('inside see colors');
 		for (i = 0; i < 20; i++) {
-			flipCard($("#tile" + i));
+			if ($("#tile" + i).css('color') == 'black' || $("#tile" + i).css('color') == 'rgb(0, 0, 0)') {
+				console.log('past the if statement')
+				flipCard($("#tile" + i));
+			}
 		}
 	});
 
