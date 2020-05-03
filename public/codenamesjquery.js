@@ -5,15 +5,13 @@ $(document).ready(function () {
 	if (cards) {
 		for (i = 0; i < cards.length; i++) {
 			document.getElementById("tile" + i).textContent = cards[i].word;
+			document.getElementById("tile" + i).style.color = cards[i].activeColor;
 		}
 	}
 
 	$("#newgamebutton").click(function() {
-		Math.seedrandom($("#seed"));
 		let words = getWords();
-
 		cards = getCards(words);
-		console.log(JSON.stringify(cards));
 
 		for (i = 0; i < cards.length; i++) {
 			element = document.getElementById("tile" + i);
@@ -37,6 +35,7 @@ $(document).ready(function () {
 		element.css('color', card.inactiveColor);
 		card.activeColor = card.inactiveColor;
 		card.inactiveColor = activeColor; 
+		saveCards();
 	}
 
 	// find the specific card in the cards array by the 'word' value
@@ -49,19 +48,21 @@ $(document).ready(function () {
 		console.log(card.color);
 	}
 
-	// get random list of words from an array of possible words
+	// get random list of words from txt file in S3
 	const getWords = () => {
-		let possibleWords = ['banana', 'cat', 'tree', 'table', 'chair',
-		'wine', 'mouse', 'computer', 'phone', 'book',
-		'lamp', 'bear', 'window', 'purse', 'house',
-		'speaker', 'camera', 'key', 'pen', 'eye',
-		'boat', 'snake', 'castle', 'dog', 'monkey',
-		'cloud', 'calendar', 'house', 'lion', 'mountain',
-		'beer', 'snow', 'television', 'farm', 'car'];
 
-		possibleWords.sort(() => Math.random() - 0.5);
+		var possibleWords;
+		$.ajaxSetup({async: false});
+		$.get('https://koch-codenames.s3.amazonaws.com/words.txt', function(response) {
+			possibleWords = response.split('\n');
 
-		return possibleWords.slice(0,20);
+			possibleWords.sort(() => Math.random() - 0.5);
+
+			possibleWords = possibleWords.slice(0,20);
+		})
+
+		return possibleWords;
+		
 	}
 
 	// create random set of 20 word
@@ -125,7 +126,14 @@ $(document).ready(function () {
 	$("#seecolors").click(function() {
 		for (i = 0; i < 20; i++) {
 			if ($("#tile" + i).css('color') == 'black' || $("#tile" + i).css('color') == 'rgb(0, 0, 0)') {
-				console.log('past the if statement')
+				flipCard($("#tile" + i));
+			}
+		}
+	});
+
+	$("#reset").click(function() {
+		for (i = 0; i < 20; i++) {
+			if ($("#tile" + i).css('color') != 'black' && $("#tile" + i).css('color') != 'rgb(0, 0, 0)') {
 				flipCard($("#tile" + i));
 			}
 		}
@@ -133,5 +141,6 @@ $(document).ready(function () {
 
 	const saveCards = () => {
 		localStorage.setItem('cards.json', JSON.stringify(cards));
+		location.reload();
 	}
 });
